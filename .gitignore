@@ -1,0 +1,42 @@
+# Ignore everything by default in this home directory repo
+/*
+
+# Allow project files
+!.gitignore
+!AGENTS.md
+!next-env.d.ts
+!package.json
+!package-lock.json
+!tsconfig.json
+!tailwind.config.ts
+!postcss.config.js
+!next.config.ts
+!README.md
+!prisma/
+!app/
+!components/
+!lib/
+!public/
+!scripts/
+!locales/
+!styles/
+
+# Node and build artifacts
+node_modules/
+.next/
+out/
+dist/
+coverage/
+
+# Env and logs
+.env
+.env.*
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS junk
+.DS_Store
+Thumbs.db
