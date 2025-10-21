@@ -24,6 +24,8 @@ prisma/dev.db
 
 !public/
 !scripts/
+!middleware.ts
+
 !locales/
 !styles/
 
