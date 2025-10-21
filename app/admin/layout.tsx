@@ -23,5 +23,9 @@ export default async function AdminLayout({
     redirect("/");
   }
 
-  return <div className="min-h-screen bg-background">{children}</div>;
+  return (
+    <div className="min-h-dvh bg-slate-950 text-slate-100">
+      {children}
+    </div>
+  );
 }
