@@ -1,4 +1,4 @@
-# Ignore everything by default in this home directory repo
+﻿# Ignore everything by default in this home directory repo
 /*
 
 # Allow project files
@@ -20,6 +20,8 @@ prisma/dev.db
 !app/
 !components/
 !lib/
+!types/
+
 !public/
 !scripts/
 !locales/
