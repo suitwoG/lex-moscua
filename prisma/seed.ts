@@ -332,6 +332,33 @@ async function seed() {
     },
   });
 
+  const author = await prisma.user.create({
+    data: {
+      email: "author@lex.local",
+      name: "Lex Author",
+      passwordHash,
+      role: UserRole.AUTHOR,
+      locale: "ru",
+      timeZone: "Europe/Moscow",
+      xp: 45,
+      coins: 60,
+    },
+  });
+
+  const learner = await prisma.user.create({
+    data: {
+      email: "learner@lex.local",
+      name: "Lex Learner",
+      passwordHash,
+      role: UserRole.LEARNER,
+      locale: "ru",
+      timeZone: "Europe/Moscow",
+      xp: 10,
+      coins: 20,
+      currentCourseId: course.id,
+    },
+  });
+
   await prisma.courseEnrollment.create({
     data: {
       userId: admin.id,
@@ -341,6 +368,21 @@ async function seed() {
       coins: 80,
       progressPercent: 35,
       streakCount: admin.streakCount,
+      lastActivityAt: new Date(),
+      currentModuleId: firstModule.id,
+      currentLessonId: firstLesson.id,
+    },
+  });
+
+  await prisma.courseEnrollment.create({
+    data: {
+      userId: learner.id,
+      courseId: course.id,
+      level: 1,
+      xp: 10,
+      coins: 20,
+      progressPercent: 10,
+      streakCount: 2,
       lastActivityAt: new Date(),
       currentModuleId: firstModule.id,
       currentLessonId: firstLesson.id,

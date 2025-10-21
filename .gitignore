@@ -37,6 +37,7 @@ dist/
 coverage/
 
 # Env and logs
+!.env.example
 .env
 .env.*
 *.log

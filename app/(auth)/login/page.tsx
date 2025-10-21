@@ -35,7 +35,7 @@ export default function LoginPage({
       <div className="mb-10 flex flex-col items-center gap-3 text-center">
         <div className="relative h-14 w-14 animate-bounce-soft rounded-full bg-primary text-white">
           <Image
-            src="/mascot/lexy.png"
+            src="/mascot/lexy.svg"
             alt="Lexy mascot"
             fill
             className="object-contain"
