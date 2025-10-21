@@ -1,5 +1,5 @@
-
 import type { Config } from "tailwindcss";
+
 const config: Config = {
   darkMode: ["class"],
   content: [
@@ -15,11 +15,7 @@ const config: Config = {
       screens: { "2xl": "1400px" },
     },
     extend: {
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
+      // shadcn theme tokens
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -55,32 +51,32 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+        xl: "1.25rem",
+        "2xl": "1.5rem",
+      },
+      // mascot feedback animations
       keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+        "mascot-pop": {
+          "0%": { transform: "scale(0.9)" },
+          "60%": { transform: "scale(1.06)" },
+          "100%": { transform: "scale(1.0)" },
         },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-        wiggle: {
-          "0%, 100%": { transform: "rotate(-4deg) scale(1.02)" },
-          "50%": { transform: "rotate(4deg) scale(1.05)" },
-        },
-        sparkle: {
-          "0%, 100%": { opacity: "0", transform: "scale(0.8)" },
-          "50%": { opacity: "1", transform: "scale(1.05)" },
+        "bounce-soft": {
+          "0%,100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-4px)" },
         },
       },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        wiggle: "wiggle 1.8s ease-in-out infinite",
-        sparkle: "sparkle 2.4s ease-in-out infinite",
+        mascot: "mascot-pop .6s ease",
+        "bounce-soft": "bounce-soft 1.4s ease-in-out infinite",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 };
+
 export default config;

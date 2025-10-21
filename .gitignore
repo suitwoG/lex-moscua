@@ -13,6 +13,10 @@
 !next.config.ts
 !README.md
 !prisma/
+!prisma/schema.prisma
+!prisma/seed.ts
+prisma/dev.db
+
 !app/
 !components/
 !lib/
