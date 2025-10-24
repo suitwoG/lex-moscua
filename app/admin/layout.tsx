@@ -1,27 +1,9 @@
-import type { ReactNode } from "react";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-
+﻿import type { ReactNode } from "react";
 import { AdminSidebar, adminNavItems } from "./_components/admin-sidebar";
-import { authOptions } from "@/lib/auth/options";
 
-const ADMIN_ROOT = "/admin";
+export const metadata = { title: "Admin • Lex MOSCUA" };
 
-export default async function AdminLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    redirect(`/login?callbackUrl=${encodeURIComponent(ADMIN_ROOT)}`);
-  }
-
-  if ((session.user as { role?: string } | undefined)?.role !== "ADMIN") {
-    redirect("/");
-  }
-
+export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-dvh bg-slate-950 text-slate-100">
       <AdminSidebar items={adminNavItems} />
