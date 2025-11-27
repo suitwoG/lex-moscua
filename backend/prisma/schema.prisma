@@ -1,0 +1,143 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+enum ExerciseType {
+  SINGLE_CHOICE
+  MULTI_CHOICE
+  FILL_IN_BLANK
+  TRUE_FALSE
+  OPEN_TEXT
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String
+  displayName   String
+  role          Role      @default(STUDENT)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  progress      UserProgress[]
+  lessonProgress LessonProgress[]
+  attempts      ExerciseAttempt[]
+}
+
+model Module {
+  id          String   @id @default(uuid())
+  slug        String   @unique
+  title       String
+  description String
+  topicCode   String
+  orderIndex  Int
+  icon        String
+  color       String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  lessons     Lesson[]
+  userProgress UserProgress[]
+}
+
+model Lesson {
+  id          String   @id @default(uuid())
+  moduleId    String
+  module      Module   @relation(fields: [moduleId], references: [id])
+  title       String
+  description String
+  orderIndex  Int
+  xpReward    Int
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  exercises   Exercise[]
+  progress    LessonProgress[]
+}
+
+model Exercise {
+  id           String       @id @default(uuid())
+  lessonId     String
+  lesson       Lesson       @relation(fields: [lessonId], references: [id])
+  title        String?
+  questionText String
+  type         ExerciseType
+  meta         Json?        // For fill-in-blank answers or other metadata
+  explanation  String?
+  legalRefs    Json?        // Array of strings
+  orderIndex   Int
+  maxScore     Int          @default(1)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  answerOptions AnswerOption[]
+  attempts      ExerciseAttempt[]
+}
+
+model AnswerOption {
+  id          String   @id @default(uuid())
+  exerciseId  String
+  exercise    Exercise @relation(fields: [exerciseId], references: [id])
+  text        String
+  isCorrect   Boolean
+  orderIndex  Int
+}
+
+model UserProgress {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id])
+  moduleId         String
+  module           Module   @relation(fields: [moduleId], references: [id])
+  xpTotal          Int      @default(0)
+  level            Int      @default(0)
+  completedLessons Int      @default(0)
+  streakCurrent    Int      @default(0)
+  streakBest       Int      @default(0)
+  lastActivityDate DateTime? @db.Date
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([userId, moduleId])
+}
+
+model LessonProgress {
+  id                 String   @id @default(uuid())
+  userId             String
+  user               User     @relation(fields: [userId], references: [id])
+  lessonId           String
+  lesson             Lesson   @relation(fields: [lessonId], references: [id])
+  completedExercises Int      @default(0)
+  lastAttemptAt      DateTime @default(now())
+  isCompleted        Boolean  @default(false)
+  scoreTotal         Int      @default(0)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@unique([userId, lessonId])
+}
+
+model ExerciseAttempt {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  exerciseId    String
+  exercise      Exercise @relation(fields: [exerciseId], references: [id])
+  submittedAt   DateTime @default(now())
+  answerPayload Json
+  isCorrect     Boolean
+  score         Int
+  createdAt     DateTime @default(now())
+}
