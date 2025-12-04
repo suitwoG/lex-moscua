@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
+import { NavBar } from "@/components/nav-bar";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter" });
@@ -23,14 +23,14 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans text-foreground antialiased",
+          "min-h-screen bg-slate-50 font-sans text-gray-900 antialiased",
           inter.className,
         )}
       >
         <div className="flex min-h-screen flex-col">
-          <SiteHeader />
-          <main className="flex-1 bg-gradient-to-b from-background via-background/90 to-background">
-            <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+          <NavBar />
+          <main className="flex-1">
+            <div className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
               {children}
             </div>
           </main>

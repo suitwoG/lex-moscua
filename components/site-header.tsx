@@ -20,19 +20,19 @@ export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/90 backdrop-blur-lg">
+    <header className="sticky top-0 z-40 border-b border-gray-200 bg-white shadow-sm">
       <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="flex items-center gap-2 font-black tracking-tight text-primary"
+          className="flex items-center gap-2 font-black tracking-tight text-emerald-600"
         >
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-2xl bg-gradient-to-tr from-orange-400 via-rose-500 to-fuchsia-500 text-base text-white shadow">
+          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 text-base text-white shadow">
             LM
           </span>
           <span className="text-lg">Lex Moscua</span>
         </Link>
 
-        <nav className="hidden items-center gap-3 text-sm font-semibold md:flex">
+        <nav className="hidden items-center gap-2 text-sm font-semibold md:flex">
           {navItems.map((item) => {
             const Icon = item.icon;
             const active = pathname === item.href;
@@ -41,10 +41,10 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-2 rounded-xl px-4 py-2 transition",
+                  "flex items-center gap-2 rounded-full px-4 py-2 transition-all",
                   active
-                    ? "bg-primary/10 text-primary shadow-inner"
-                    : "text-foreground/70 hover:bg-muted/60 hover:text-foreground",
+                    ? "bg-emerald-100 text-emerald-700 shadow-sm"
+                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900",
                 )}
               >
                 <Icon className="h-4 w-4" />
@@ -75,7 +75,7 @@ export function SiteHeader() {
       </div>
 
       {mobileOpen ? (
-        <nav className="border-t border-border/60 bg-background/95 px-4 py-4 md:hidden">
+        <nav className="border-t border-gray-200 bg-white px-4 py-4 md:hidden">
           <div className="grid gap-3">
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -87,8 +87,8 @@ export function SiteHeader() {
                   className={cn(
                     "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition",
                     active
-                      ? "bg-primary/10 text-primary shadow-inner"
-                      : "bg-muted/40 text-foreground/80 hover:bg-muted/80 hover:text-foreground",
+                      ? "bg-emerald-100 text-emerald-700 shadow-sm"
+                      : "bg-gray-50 text-gray-700 hover:bg-gray-100 hover:text-gray-900",
                   )}
                   onClick={() => setMobileOpen(false)}
                 >

@@ -1,102 +1,103 @@
+import Image from "next/image";
 
-import Link from "next/link";
-import { ArrowRight, ShieldCheck, Sparkles, Trophy } from "lucide-react";
-import { Button } from "@/components/ui/button";
-const highlights = [
-  {
-    title: "Structured legal quests",
-    description: "Unlock modules step by step, from theory of state to practice-heavy case drills.",
-    icon: Sparkles,
-  },
-  {
-    title: "Daily momentum",
-    description: "Stay on track with streaks, XP boosts, and mascot cheers for every milestone.",
-    icon: Trophy,
-  },
-  {
-    title: "Confident compliance",
-    description: "Built for universities and firms that need a reliable, auditable learning path.",
-    icon: ShieldCheck,
-  },
-];
 export default function Home() {
   return (
-    <div className="space-y-12">
-      <section className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-        <div className="space-y-6">
-          <span className="inline-flex items-center justify-start gap-2 rounded-full bg-primary/10 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
-            Legal learning, Duolingo energy
-          </span>
-          <h1 className="text-balance text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">
-            Master Russian legal fundamentals through playful daily missions.
-          </h1>
-          <p className="text-base text-muted-foreground sm:text-lg">
-            Lex Moscua helps learners breeze through theory, drills, and case practice. Switch disciplines in one tap, track XP, and celebrate wins with a Moscow-inspired mascot.
-          </p>
-          <div className="flex flex-wrap items-center gap-4">
-            <Button asChild size="lg" className="rounded-2xl px-6 py-5 text-base">
-              <Link href="/leaderboard" className="flex items-center gap-2">
-                Jump into today&apos;s track <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-            <Button asChild variant="secondary" size="lg" className="rounded-2xl px-6 py-5 text-base">
-              <Link href="/store">Preview rewards</Link>
-            </Button>
-          </div>
-        </div>
-        <div className="relative isolate overflow-hidden rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-background p-8 shadow-xl">
-          <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/40 blur-3xl" />
-          <div className="absolute -left-6 bottom-8 h-32 w-32 rounded-full bg-amber-500/30 blur-2xl" />
-          <div className="relative space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-sm font-bold uppercase tracking-wide text-primary">Today&apos;s focus</h2>
-              <span className="rounded-full bg-background/60 px-3 py-1 text-xs font-semibold text-muted-foreground">XP boost active</span>
-            </div>
-            <div className="grid gap-4">
-              <CardStat label="Current streak" value="7 days" trend="+2 vs last week" />
-              <CardStat label="Discipline" value="Theory of State & Law" trend="Module 2 of 6" />
-              <CardStat label="Daily goal" value="20 XP" trend="Complete 1 new lesson" />
-            </div>
-            <div className="rounded-2xl bg-background/80 p-4 text-sm text-muted-foreground">
-              Complete the module to unlock a gold badge and new procedural law quests.
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {highlights.map((item) => {
-          const Icon = item.icon;
-          return (
-            <article
-              key={item.title}
-              className="group relative overflow-hidden rounded-3xl border border-border/60 bg-card/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div className="absolute right-0 top-0 h-24 w-24 rounded-full bg-primary/10 blur-3xl transition group-hover:bg-primary/20" />
-              <Icon className="h-8 w-8 text-primary" />
-              <h3 className="mt-4 text-lg font-semibold text-foreground">{item.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
-            </article>
-          );
-        })}
-      </section>
-    </div>
-  );
-}
-function CardStat({
-  label,
-  value,
-  trend,
-}: {
-  label: string;
-  value: string;
-  trend: string;
-}) {
-  return (
-    <div className="rounded-2xl border border-border/50 bg-background/80 p-4 shadow-sm">
-      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{label}</p>
-      <p className="mt-2 text-2xl font-black text-foreground">{value}</p>
-      <p className="text-xs font-medium text-primary/80">{trend}</p>
-    </div>
-  );
-}
+    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
+      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+        <Image
+          className="dark:invert"
+          src="/next.svg"
+          alt="Next.js logo"
+          width={180}
+          height={38}
+          priority
+        />
+        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
+          <li className="mb-2 tracking-[-.01em]">
+            Get started by editing{" "}
+            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
+              app/page.tsx
+            </code>
+            .
+          </li>
+          <li className="tracking-[-.01em]">
+            Save and see your changes instantly.
+          </li>
+        </ol>
 
+        <div className="flex gap-4 items-center flex-col sm:flex-row">
+          <a
+            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
+            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              className="dark:invert"
+              src="/vercel.svg"
+              alt="Vercel logomark"
+              width={20}
+              height={20}
+            />
+            Deploy now
+          </a>
+          <a
+            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
+            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Read our docs
+          </a>
+        </div>
+      </main>
+      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
+        <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image
+            aria-hidden
+            src="/file.svg"
+            alt="File icon"
+            width={16}
+            height={16}
+          />
+          Learn
+        </a>
+        <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image
+            aria-hidden
+            src="/window.svg"
+            alt="Window icon"
+            width={16}
+            height={16}
+          />
+          Examples
+        </a>
+        <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image
+            aria-hidden
+            src="/globe.svg"
+            alt="Globe icon"
+            width={16}
+            height={16}
+          />
+          Go to nextjs.org →
+        </a>
+      </footer>
+    </div>
+  );
+}
