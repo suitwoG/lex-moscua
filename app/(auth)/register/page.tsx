@@ -1,30 +1,30 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
 
 import { Button } from "@/components/ui/button";
-import { loginAction, type LoginActionState } from "./actions";
+import { registerAction, type RegisterActionState } from "./actions";
 
-const initialState: LoginActionState = {};
+const initialState: RegisterActionState = {};
 
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" className="w-full rounded-xl py-6 text-base font-bold" disabled={pending}>
-      {pending ? "Входим..." : "Войти"}
+      {pending ? "Создаём..." : "Создать аккаунт"}
     </Button>
   );
 }
 
-export default function LoginPage({
+export default function RegisterPage({
   searchParams,
 }: {
   searchParams?: { callbackUrl?: string };
 }) {
   const callbackUrl = searchParams?.callbackUrl ?? "/";
-  const [state, formAction] = useFormState(loginAction, initialState);
+  const [state, formAction] = useFormState(registerAction, initialState);
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-center px-4 py-16">
@@ -33,15 +33,31 @@ export default function LoginPage({
           <Image src="/mascot/lexy.svg" alt="Lexy mascot" fill className="object-contain" priority />
         </div>
         <div>
-          <h1 className="text-3xl font-extrabold">Lex Moscua</h1>
+          <h1 className="text-3xl font-extrabold">Присоединяйтесь к Lex Moscua</h1>
           <p className="text-sm text-muted-foreground">
-            Войдите в аккаунт, чтобы синхронизировать прогресс обучения и открыть закрытые разделы.
+            Зарегистрируйтесь и начните отслеживать прогресс, получать XP и открывать новые уроки.
           </p>
         </div>
       </div>
 
       <form action={formAction} className="space-y-6 rounded-3xl border border-border/60 bg-card/80 p-8 shadow-lg">
         <input type="hidden" name="callbackUrl" value={callbackUrl} />
+
+        <div className="space-y-2">
+          <label htmlFor="name" className="text-sm font-semibold text-foreground">
+            Имя
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            autoComplete="name"
+            required
+            className="w-full rounded-xl border border-border bg-background/80 px-4 py-3 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+            placeholder="Например, Анна"
+          />
+        </div>
+
         <div className="space-y-2">
           <label htmlFor="email" className="text-sm font-semibold text-foreground">
             Email
@@ -53,9 +69,10 @@ export default function LoginPage({
             autoComplete="email"
             required
             className="w-full rounded-xl border border-border bg-background/80 px-4 py-3 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
-            placeholder="admin@lex.local"
+            placeholder="you@example.com"
           />
         </div>
+
         <div className="space-y-2">
           <label htmlFor="password" className="text-sm font-semibold text-foreground">
             Пароль
@@ -64,10 +81,25 @@ export default function LoginPage({
             id="password"
             name="password"
             type="password"
-            autoComplete="current-password"
+            autoComplete="new-password"
             required
             className="w-full rounded-xl border border-border bg-background/80 px-4 py-3 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
             placeholder="Минимум 6 символов"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label htmlFor="confirmPassword" className="text-sm font-semibold text-foreground">
+            Повторите пароль
+          </label>
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            autoComplete="new-password"
+            required
+            className="w-full rounded-xl border border-border bg-background/80 px-4 py-3 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+            placeholder="Для проверки"
           />
         </div>
 
@@ -80,17 +112,10 @@ export default function LoginPage({
         <SubmitButton />
 
         <p className="text-center text-sm text-muted-foreground">
-          Нет аккаунта?{" "}
-          <Link href="/register" className="font-semibold text-primary underline">
-            Зарегистрируйтесь
+          Уже есть аккаунт?{" "}
+          <Link href="/login" className="font-semibold text-primary underline">
+            Войдите
           </Link>
-        </p>
-        <p className="text-center text-xs text-muted-foreground">
-          Отправляя форму, вы соглашаетесь с{" "}
-          <Link href="/terms" className="font-semibold text-primary underline">
-            правилами сервиса
-          </Link>
-          .
         </p>
       </form>
     </div>

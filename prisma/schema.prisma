@@ -1,4 +1,4 @@
-generator client {
+﻿generator client {
   provider = "prisma-client-js"
 }
 
@@ -15,6 +15,7 @@ model User {
   id        String    @id @default(cuid())
   email     String    @unique
   name      String?
+  passwordHash String?
   role      Role      @default(LEARNER)
   createdAt DateTime  @default(now())
   progress  Progress[]
