@@ -36,10 +36,12 @@ export async function loginAction(
     }
   } catch (error) {
     console.error("Login failed:", error);
-    if (error instanceof Error && error.message.includes("no such table")) {
-      return {
-        error: "База данных ещё не инициализирована. Выполните `npx prisma db push && npm run db:seed`.",
-      };
+    if (error instanceof Error) {
+      if (error.message.includes("no such table") || error.message.includes("no column named passwordHash")) {
+        return {
+          error: "База данных ещё не инициализирована. Выполните `npx prisma db push && npm run db:seed`.",
+        };
+      }
     }
     return { error: "Не удалось выполнить вход. Попробуйте ещё раз позже." };
   }

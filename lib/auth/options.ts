@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 
 import { prisma } from "@/lib/prisma";
+import { ensurePasswordHashColumn } from "@/lib/auth/password-column";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -15,6 +16,8 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials.password) {
           throw new Error("Missing credentials");
         }
+
+        await ensurePasswordHashColumn();
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email.toLowerCase() },

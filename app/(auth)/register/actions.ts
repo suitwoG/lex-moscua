@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 
 import { prisma } from "@/lib/prisma";
+import { ensurePasswordHashColumn } from "@/lib/auth/password-column";
 
 export type RegisterActionState = {
   error?: string;
@@ -46,6 +47,8 @@ export async function registerAction(
   const { name, email, password } = parseResult.data;
 
   try {
+    await ensurePasswordHashColumn();
+
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
       return { error: "Такой email уже зарегистрирован. Попробуйте войти." };
@@ -73,10 +76,15 @@ export async function registerAction(
     }
   } catch (error) {
     console.error("Register failed:", error);
-    if (error instanceof Error && error.message.includes("no such table")) {
-      return {
-        error: "База данных ещё не создана. Выполните `npx prisma db push` и повторите попытку.",
-      };
+    if (error instanceof Error) {
+      if (error.message.includes("no such table") || error.message.includes("no column named passwordHash")) {
+        return {
+          error: "База данных ещё не создана. Выполните `npx prisma db push && npm run db:seed` и попробуйте снова.",
+        };
+      }
+      if (error.message.includes("UNIQUE constraint failed")) {
+        return { error: "Такой email уже зарегистрирован. Попробуйте войти." };
+      }
     }
     return { error: "Не удалось создать аккаунт. Попробуйте снова позже." };
   }
