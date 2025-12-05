@@ -7,9 +7,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role { ADMIN AUTHOR LEARNER }
-enum TaskKind { MCQ CLOZE TRUE_FALSE MATCH }
-enum LessonStatus { LOCKED AVAILABLE CURRENT DONE NOT_PASSED }
+enum Role {
+  ADMIN
+  AUTHOR
+  LEARNER
+}
+
+enum TaskKind {
+  MCQ
+  CLOZE
+  TRUE_FALSE
+  MATCH
+}
+
+enum LessonStatus {
+  LOCKED
+  AVAILABLE
+  CURRENT
+  DONE
+  NOT_PASSED
+}
 
 model User {
   id        String    @id @default(cuid())
